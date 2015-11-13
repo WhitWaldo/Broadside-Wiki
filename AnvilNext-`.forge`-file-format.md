@@ -61,8 +61,9 @@ Located at `file_hdr.rsc_idx_hdr_ptr`.
 A list that is `rsc_idx_hdr.record_count` elements large, containing:
 ```c
 resource_record_??:
-resource_record_??+0x00000000: .resource_ptr: u32     // A pointer to the resource data
-resource_record_??+0x00000004: .unknown:       u32[4]
+resource_record_??+0x00000000: .resource_ptr:  u32     // A pointer to the resource data
+resource_record_??+0x00000004: .unknown:       u32[3]
+resource_record_??+0x00000010: .resource_size: u32     // The size of the resource data
 resource_record_??_end
 ```
 
@@ -93,4 +94,4 @@ The rest of the data in this chunk corresponds to each `resource_record_??.resou
 80 00 80 01
 ```
 
-The sequence is then repeated several bytes (at least 20 bytes) later, except without the first 32-bit `0x4`.
+The next time this sequence occurs is `resource_record_??.resource_size + 1` bytes later, which is the start of the `?? + 1`th resource.
